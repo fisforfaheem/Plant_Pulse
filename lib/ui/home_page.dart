@@ -3,6 +3,7 @@ import 'package:plantpulse/data/user/repositories/user_repository.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:plantpulse/ui/devices/screen/add_device_Screen.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/tab_icon_data.dart';
+import 'package:plantpulse/ui/diseases/disease_detection_page.dart';
 import 'package:plantpulse/ui/plant_recognizer/plant_recognizer.dart';
 import 'package:plantpulse/ui/devices/screen/devices_screen.dart';
 import 'package:plantpulse/ui/farm/farm_management_page.dart';
@@ -35,13 +36,13 @@ class _HomePageState extends State<HomePage> {
     BLESCR(
       key: ValueKey(2),
     ),
-    /*DevicesScreen(
-      pageTitle: 'Devices',
-      key: ValueKey(2),
-    ),*/
-
+    DiseaseDetectionPage(
+      pageTitle: 'Disease Detection',
+      key: ValueKey(3),
+    ),
+/*
     PlantRecognizer(pageTitle: 'Plant Identification', //
-      key: ValueKey(3),),
+      key: ValueKey(3),),*/
 
     UserProfilePage(
       pageTitle: 'My Profile',
