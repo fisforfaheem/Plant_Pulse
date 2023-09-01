@@ -17,7 +17,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 
-
 class BLESCR extends StatefulWidget {
   const BLESCR({Key? key}) : super(key: key);
 
@@ -62,13 +61,12 @@ class _BLESCRState extends State<BLESCR> {
   //String _hostname = "hostname";
 
   void _startScan() async {
-
     // Main scanning logic happens here ⤵️
     setState(() {
       _scanStarted = true;
     });
-    _scanStream =
-        flutterReactiveBle.scanForDevices(withServices: [deviceGATTserviceUUID]).listen((device) {
+    _scanStream = flutterReactiveBle
+        .scanForDevices(withServices: [deviceGATTserviceUUID]).listen((device) {
       if (device.name.startsWith('Rodland Farms')) {
         setState(() {
           _uniqueDevice = device;
@@ -101,17 +99,19 @@ class _BLESCRState extends State<BLESCR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           title: Text('Device Discovered',
               textAlign: TextAlign.center,
-              style: AppTheme.appTheme.textTheme.titleLarge!.copyWith(color: Colors.orange)),
+              style: AppTheme.appTheme.textTheme.titleLarge!
+                  .copyWith(color: Colors.orange)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-
               Text("Would you like to add $deviceName to your dashboard?",
                   textAlign: TextAlign.center,
-                  style: AppTheme.appTheme.textTheme.bodyMedium!.copyWith(color: Colors.green)),
+                  style: AppTheme.appTheme.textTheme.bodyMedium!
+                      .copyWith(color: Colors.green)),
               SizedBox(height: 10.0), // Add space between text and buttons
               Container(
                 width: 180.0, // Set the width of each button
@@ -144,8 +144,6 @@ class _BLESCRState extends State<BLESCR> {
     );
   }
 
-
-
   void _connectToDevice() {
     EasyLoading.dismiss();
     // Let's listen to our connection so we can make updates on a state change
@@ -154,7 +152,10 @@ class _BLESCRState extends State<BLESCR> {
         .connectToAdvertisingDevice(
             id: _uniqueDevice.id,
             prescanDuration: const Duration(seconds: 3),
-            withServices: [deviceGATTserviceUUID, deviceGATTProvConfigCharUUID]);
+            withServices: [
+          deviceGATTserviceUUID,
+          deviceGATTProvConfigCharUUID
+        ]);
 
     currentConnectionStream.listen((event) async {
       switch (event.connectionState) {
@@ -172,9 +173,11 @@ class _BLESCRState extends State<BLESCR> {
                 serviceId: deviceGATTserviceUUID,
                 characteristicId: deviceGATTInfoCharUUID,
                 deviceId: event.deviceId);
-            await flutterReactiveBle.writeCharacteristicWithResponse(infoCharacteristic,
+            await flutterReactiveBle.writeCharacteristicWithResponse(
+                infoCharacteristic,
                 value: Uint8List.fromList('ESP'.codeUnits));
-            final info = await flutterReactiveBle.readCharacteristic(infoCharacteristic);
+            final info =
+                await flutterReactiveBle.readCharacteristic(infoCharacteristic);
             if (kDebugMode) {
               print(String.fromCharCodes(info));
             }
@@ -183,10 +186,11 @@ class _BLESCRState extends State<BLESCR> {
                 characteristicId: deviceGATTProvConfigCharUUID,
                 deviceId: event.deviceId);
 
-            await flutterReactiveBle.writeCharacteristicWithResponse(provConfigCharacteristic,
+            await flutterReactiveBle.writeCharacteristicWithResponse(
+                provConfigCharacteristic,
                 value: startOfConfig);
-            final readconfChar =
-                await flutterReactiveBle.readCharacteristic(provConfigCharacteristic);
+            final readconfChar = await flutterReactiveBle
+                .readCharacteristic(provConfigCharacteristic);
             if (kDebugMode) {
               print(readconfChar);
             }
@@ -197,19 +201,23 @@ class _BLESCRState extends State<BLESCR> {
                 characteristicId: deviceGATTCustomDataCharUUID,
                 deviceId: event.deviceId);
 
-            await flutterReactiveBle.writeCharacteristicWithResponse(customDataCharacteristic,
+            await flutterReactiveBle.writeCharacteristicWithResponse(
+                customDataCharacteristic,
                 value: Uint8List.fromList(
-                    "{\"name\":\"$_sensorName\",\"location\":\"$_sensorLocation\"}".codeUnits));
+                    "{\"name\":\"$_sensorName\",\"location\":\"$_sensorLocation\"}"
+                        .codeUnits));
             await Future.delayed(const Duration(seconds: 2));
-            await flutterReactiveBle.writeCharacteristicWithResponse(provConfigCharacteristic,
+            await flutterReactiveBle.writeCharacteristicWithResponse(
+                provConfigCharacteristic,
                 value: _getWiFiConfigDataToWrite());
-            final readconfChar2 =
-                await flutterReactiveBle.readCharacteristic(provConfigCharacteristic);
+            final readconfChar2 = await flutterReactiveBle
+                .readCharacteristic(provConfigCharacteristic);
             if (kDebugMode) {
               print(readconfChar2);
             }
 
-            await flutterReactiveBle.writeCharacteristicWithResponse(provConfigCharacteristic,
+            await flutterReactiveBle.writeCharacteristicWithResponse(
+                provConfigCharacteristic,
                 value: applyConfigData);
             await Future.delayed(const Duration(seconds: 1));
 
@@ -254,8 +262,12 @@ class _BLESCRState extends State<BLESCR> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: 'Back to dashboard',color: kPastelGreen,),
+    return MaterialApp(
+        home: Scaffold(
+      appBar: CustomAppBar(
+        title: 'Back to dashboard',
+        color: kPastelGreen,
+      ),
 
       // appBar: AppBar(
       //   title: const Text("Back to dashboard"),
@@ -267,72 +279,94 @@ class _BLESCRState extends State<BLESCR> {
       // ),
       backgroundColor: Colors.white,
       body: Container(),
-      bottomNavigationBar:Container(
+      bottomNavigationBar: Container(
         child: Row(
           mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // Center the button horizontally
           children: [
-          // We want to enable this button if the scan has NOT started
-          // If the scan HAS started, it should be disabled.
-          _scanStarted
-          // True condition
-              ? Expanded(
-            flex: 1,
-                child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // background
-                foregroundColor: Colors.white, // foreground
-            ),
-            onPressed: () async {},
-            child:  Icon(Icons.search,color: Color(kPastelGreen),),
-          ),
-              )
-          // False condition
-              : Expanded(
-            flex: 1,
-                child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white, // foreground
-            ),
-            //if bluetooth not enabled:
-            // customEnableBT(context)
-            // or
-            onPressed: () async {
-                final locationPermission = await Permission.locationWhenInUse.request();
-                final bluetoothScanPermission = await Permission.bluetoothScan.request();
-                final bluetoothConnectPermission = await Permission.bluetoothConnect.request();
+            // We want to enable this button if the scan has NOT started
+            // If the scan HAS started, it should be disabled.
+            _scanStarted
+                // True condition
+                ? Center(
+                    child: SizedBox(
+                      width: 200, // Adjust the width as needed
+                      height: 50, // Adjust the height as needed
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white, // background
+                          foregroundColor: Colors.white, // foreground
+                        ),
+                        onPressed: () async {},
+                        child: Icon(
+                          Icons.search,
+                          color: Color(kPastelGreen),
+                        ),
+                      ),
+                    ),
+                  )
+                // False condition
+                : Center(
+                    child: SizedBox(
+                      width: 200, // Adjust the width as needed
+                      height: 50, // Adjust the height as needed
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          foregroundColor: Colors.white, // foreground
+                        ),
+                        //if bluetooth not enabled:
+                        // customEnableBT(context)
+                        // or
+                        onPressed: () async {
+                          final locationPermission =
+                              await Permission.locationWhenInUse.request();
+                          final bluetoothScanPermission =
+                              await Permission.bluetoothScan.request();
+                          final bluetoothConnectPermission =
+                              await Permission.bluetoothConnect.request();
 
-                if ([locationPermission, bluetoothConnectPermission, bluetoothScanPermission]
-                    .any((permission) => permission != PermissionStatus.granted)) return;
+                          if ([
+                            locationPermission,
+                            bluetoothConnectPermission,
+                            bluetoothScanPermission
+                          ].any((permission) =>
+                              permission != PermissionStatus.granted)) return;
 
-                final bluetoothEnable = await isBluetoothEnabled();
-                final locationOn = await location.Location().serviceEnabled();
-                if (locationOn == false) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Turn on Location')));
-                  Future.delayed(Duration(seconds: 2), () {
-                    location.Location().requestService();
-                  });
-                  return;
-                }
-                if (bluetoothEnable == false) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Turn on Bluetooth')));
-                  Future.delayed(Duration(seconds: 2), () {
-                    enableBluetooth();
-                  });
-                  return;
-                }
-                _startScan();
-            },
-                  child:  Icon(Icons.search,),
-          ),
-              ),
-        ],),
-      )
-
-    );
+                          final bluetoothEnable = await isBluetoothEnabled();
+                          final locationOn =
+                              await location.Location().serviceEnabled();
+                          if (locationOn == false) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Turn on Location')));
+                            Future.delayed(Duration(seconds: 2), () {
+                              location.Location().requestService();
+                            });
+                            return;
+                          }
+                          if (bluetoothEnable == false) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Turn on Bluetooth')));
+                            Future.delayed(Duration(seconds: 2), () {
+                              enableBluetooth();
+                            });
+                            return;
+                          }
+                          _startScan();
+                        },
+                        child: Icon(
+                          Icons.search,
+                        ),
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    ));
   }
+
   Future<void> _checkAndPromptWifi() async {
     //isEnabled = await WiFiForIoTPlugin.isEnabled;
     if (!await WiFiForIoTPlugin.isEnabled()) {
@@ -345,7 +379,8 @@ class _BLESCRState extends State<BLESCR> {
   Future<void> _scanForWifiSSIDs() async {
     List<WifiNetwork> wifiNetworks = await WiFiForIoTPlugin.loadWifiList();
     if (wifiNetworks != null) {
-      List<String?> ssids = wifiNetworks.map((network) => network.ssid).toList();
+      List<String?> ssids =
+          wifiNetworks.map((network) => network.ssid).toList();
       setState(() {
         wifiSSIDs = ssids;
       });
@@ -364,7 +399,7 @@ class _BLESCRState extends State<BLESCR> {
             mainAxisSize: MainAxisSize.min,
             children: List.generate(
               wifiSSIDs.length,
-                  (index) => ListTile(
+              (index) => ListTile(
                 title: Text(wifiSSIDs[index]!),
                 onTap: () {
                   Navigator.pop(context); // Close the dialog
@@ -452,7 +487,6 @@ class _BLESCRState extends State<BLESCR> {
     );
   }
 
-
   //String sensorName = "";
   void setUpSensorName() {
     EasyLoading.dismiss();
@@ -461,7 +495,8 @@ class _BLESCRState extends State<BLESCR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           title: const Text('Plant Name'),
           content: SizedBox(
             height: 350,
@@ -508,7 +543,8 @@ class _BLESCRState extends State<BLESCR> {
   }
 
   Future<bool> isBluetoothEnabled() async {
-    final BluetoothState bluetoothState = await FlutterBluetoothSerial.instance.state;
+    final BluetoothState bluetoothState =
+        await FlutterBluetoothSerial.instance.state;
     return bluetoothState == BluetoothState.STATE_ON;
   }
 
@@ -523,7 +559,8 @@ class _BLESCRState extends State<BLESCR> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text("Enable Bluetooth"),
-                content: const Text("Please enable Bluetooth in the device settings."),
+                content: const Text(
+                    "Please enable Bluetooth in the device settings."),
                 actions: <Widget>[
                   TextButton(
                     child: const Text("Cancel"),
@@ -548,7 +585,8 @@ class _BLESCRState extends State<BLESCR> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           title: const Text('Plant Location'),
           content: SizedBox(
             height: 350,
@@ -638,8 +676,15 @@ class _BLESCRState extends State<BLESCR> {
     double dialogRadius = 10.0;
     bool barrierDismissible = true; //
 
-    BluetoothEnable.customBluetoothRequest(context, dialogTitle, displayDialogContent,
-            dialogContent, cancelBtnText, acceptBtnText, dialogRadius, barrierDismissible)
+    BluetoothEnable.customBluetoothRequest(
+            context,
+            dialogTitle,
+            displayDialogContent,
+            dialogContent,
+            cancelBtnText,
+            acceptBtnText,
+            dialogRadius,
+            barrierDismissible)
         .then((value) {
       if (value == "true") {
         //_startScan();
