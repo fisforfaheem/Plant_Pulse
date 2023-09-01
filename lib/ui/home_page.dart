@@ -25,25 +25,19 @@ class _HomePageState extends State<HomePage> {
   List<TabIconData> _tabIconsList = TabIconData.tabIconsList;
   List<Widget> _tabList = [
     FarmManagementPage(
-      pageTitle: 'Farm Management',
+      pageTitle: 'Farm Management', //Home
       key: ValueKey(1),
     ),
 
+  //Todo: Change to add devices; make call to BLESCR() instead of DevicesScreen
     DevicesScreen(
       pageTitle: 'Devices',
       key: ValueKey(2),
     ),
 
-    // IoTMonitoringPage(
-    //   pageTitle: 'IoT Monitoring',
-    //   key: ValueKey(2),
-    // ),
-    PlantRecognizer(pageTitle: 'Plant Identification',
+    PlantRecognizer(pageTitle: 'Plant Identification', //
       key: ValueKey(3),),
-    /*DiseaseDetectionPage(
-      pageTitle: 'Disease Detection',
-      key: ValueKey(3),
-    ),*/
+
     UserProfilePage(
       pageTitle: 'My Profile',
       key: ValueKey(4),
