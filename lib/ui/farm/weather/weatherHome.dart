@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../app_theme.dart';
 import 'cityEntryView.dart';
 import 'gradient.dart';
 
@@ -125,19 +126,64 @@ class _WeatherHomeState extends State<WeatherHome> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('GPS Permission Denied'),
-          content: Text(
-              'GPS permission is necessary to get accurate weather readings. Please tap OK to grant GPS permission'),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _requestLocationPermission(weatherVM, context);
-              },
+        return Theme(
+          data: AppTheme.appTheme.copyWith(
+            // Customize the dialog title text style
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                fontSize: 18, // Adjust the font size as needed
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Customize the text color
+              ),
             ),
-          ],
+          ),
+          child: AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Add the image at the top center
+                Image.asset(
+                  'assets/images/plant_pulse.png',
+                  //width: 100.0, // Adjust the width as needed
+                  //height: 100.0, // Adjust the height as needed
+                ),
+                SizedBox(height: 16.0), // Add spacing between image and text
+                Text(
+                  'Location Permission',
+                  style: TextStyle(
+                    fontSize: 20, // Adjust the font size as needed
+                    fontWeight: FontWeight.w700,// Adjust the font size as needed
+                    color: Colors.black87, // Customize the text color
+                  ),
+                ),
+                SizedBox(height: 16.0), // Add spacing between text and button
+                Text(
+                  'The app requires permission to access the device\'s location in order to provide accurate local weather forecasts, which are essential for optimizing plant light and watering schedules based on the specific environmental conditions of the user\'s location. This ensures that plants receive the right amount of light and water, promoting their health and growth.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87, // Customize the text color
+                  ),
+                ),
+                SizedBox(height: 16.0), // Add spacing between text and button
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(kPastelGreen), // Customize the button background color
+                  ),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      fontSize: 16, // Adjust the font size as needed
+                      color: Colors.white, // Customize the text color
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _requestLocationPermission(weatherVM, context);
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -147,18 +193,63 @@ class _WeatherHomeState extends State<WeatherHome> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('GPS Permission Denied Forever'),
-          content: Text(
-              'GPS permission is necessary to get accurate weather readings. Please grant the permission in the app settings.'),
-          actions: [
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        return Theme(
+          data: AppTheme.appTheme.copyWith(
+            // Customize the dialog title text style
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                fontSize: 18, // Adjust the font size as needed
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Customize the text color
+              ),
             ),
-          ],
+          ),
+          child: AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Add the image at the top center
+                Image.asset(
+                  'assets/images/plant_pulse.png',
+                  //width: 100.0, // Adjust the width as needed
+                  //height: 100.0, // Adjust the height as needed
+                ),
+                SizedBox(height: 16.0), // Add spacing between image and text
+                Text(
+                  'Location Permission Permanently Denied',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,// Adjust the font size as needed
+                    color: Colors.black87, // Customize the text color
+                  ),
+                ),
+                Text(
+                  'The app requires permission to access the device\'s location in order to provide accurate local weather forecasts, which are essential for optimizing plant light and watering schedules based on the specific environmental conditions of the user\'s location. This ensures that plants receive the right amount of light and water, promoting their health and growth.',
+                  style: TextStyle(
+                    fontSize: 16, // Adjust the font size as needed
+                    color: Colors.black87, // Customize the text color
+                  ),
+                ),
+                SizedBox(height: 16.0), // Add spacing between text and button
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(kPastelGreen), // Customize the button background color
+                  ),
+                  child: Text(
+                    'OK',
+                    style: TextStyle(
+                      fontSize: 16, // Adjust the font size as needed
+                      color: Colors.white, // Customize the text color
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    //_requestLocationPermission(weatherVM, context);
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
