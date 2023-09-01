@@ -1,8 +1,9 @@
-import 'package:plantpulse/app_theme.dart';
-import 'package:plantpulse/ui/diseases/diagnosis.dart';
-import 'package:plantpulse/ui/diseases/disease_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../app_theme.dart';
+import 'diagnosis.dart';
+import 'disease_card_item.dart';
 
 class DiseaseCard extends StatelessWidget {
   const DiseaseCard({Key? key}) : super(key: key);

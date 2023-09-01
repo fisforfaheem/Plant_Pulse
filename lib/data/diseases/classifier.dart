@@ -1,162 +1,115 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 import 'package:image/image.dart';
+import 'package:logger/logger.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+//import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
 
-import '../../ui/plant_recognizer/classifier/classifier_model.dart';
-import 'classifier_category.dart';
+//tflite type
 
-typedef ClassifierLabels = List<String>;
+abstract class Classifier {
+  late Interpreter interpreter;
+  late InterpreterOptions _interpreterOptions;
+  var logger = Logger();
+  late List<int> _inputShape;
+  late List<int> _outputShape;
+  late TensorImage _inputImage;
+  late TensorBuffer _outputBuffer;
+  TensorType _outputType = TensorType.uint8;
+  final String _labelsFileName = 'assets/dict.txt';
+  final int _labelsLength = 6;
+  var _probabilityProcessor;
+  late List<String> labels;
 
-class Classifier {
-  final ClassifierLabels _labels;
-  final ClassifierModel _model;
+  String get modelName => 'assets/model.tflite';
+  NormalizeOp get preProcessNormalizeOp;
+  NormalizeOp get postProcessNormalizeOp;
 
-  Classifier._({
-    required ClassifierLabels labels,
-    required ClassifierModel model,
-  })  : _labels = labels,
-        _model = model;
+  Classifier({int numThreads = 0}) {
+    _interpreterOptions = InterpreterOptions();
 
-  static Future<Classifier?> loadWith({
-    required String labelsFileName,
-    required String modelFileName,
-  }) async {
+    _interpreterOptions.threads = numThreads;
+    loadModel();
+    loadLabels();
+  }
+
+  Future<void> loadModel() async {
+    print('Loading model...');
     try {
-      final labels = await _loadLabels(labelsFileName);
-      final model = await _loadModel(modelFileName);
-      return Classifier._(labels: labels, model: model);
+      interpreter = await Interpreter.fromAsset(
+        'assets/model.tflite',
+        options: _interpreterOptions,
+      );
+      _inputShape = interpreter.getInputTensor(0).shape;
+      _outputShape = interpreter.getOutputTensor(0).shape;
+      _outputType = interpreter.getOutputTensor(0).type;
+      _outputBuffer = TensorBufferUint8(_outputShape); //TensorBufferFloat32
+      _probabilityProcessor =
+          TensorProcessorBuilder().add(postProcessNormalizeOp).build();
     } catch (e) {
-      debugPrint('Can\'t initialize Classifier: ${e.toString()}');
-      if (e is Error) {
-        debugPrintStack(stackTrace: e.stackTrace);
-      }
-      return null;
+      print('Unable to create interpreter, Caught Exception: ${e.toString()}');
     }
   }
 
-  static Future<ClassifierModel> _loadModel(String modelFileName) async {
-    final interpreter = await Interpreter.fromAsset(modelFileName);
-
-    // Get input and output shape from the model
-    final inputShape = interpreter.getInputTensor(0).shape;
-    final outputShape = interpreter.getOutputTensor(0).shape;
-
-    debugPrint('Input shape: $inputShape');
-    debugPrint('Output shape: $outputShape');
-
-    // Get input and output type from the model
-    final inputType = interpreter.getInputTensor(0).type;
-    final outputType = interpreter.getOutputTensor(0).type;
-
-    debugPrint('Input type: $inputType');
-    debugPrint('Output type: $outputType');
-
-    return ClassifierModel(
-      interpreter: interpreter,
-      inputShape: inputShape,
-      outputShape: outputShape,
-      inputType: inputType,
-      outputType: outputType,
-    );
+  Future<void> loadLabels() async {
+    labels = await FileUtil.loadLabels(_labelsFileName);
+    if (labels.length != 0) {
+      print('Labels loaded successfully');
+    } else {
+      print('Unable to load labels');
+    }
   }
 
-  static Future<ClassifierLabels> _loadLabels(String labelsFileName) async {
-    final rawLabels = await FileUtil.loadLabels(labelsFileName);
+  TensorImage _preProcess() {
+    int cropSize = min(_inputImage.height, _inputImage.width);
+    return ImageProcessorBuilder()
+        .add(ResizeWithCropOrPadOp(cropSize, cropSize))
+        .add(
+          ResizeOp(
+            _inputShape[1],
+            _inputShape[2],
+            ResizeMethod.nearestneighbour,
+          ),
+        )
+        .add(preProcessNormalizeOp)
+        .build()
+        .process(_inputImage);
+  }
 
-    // Remove the index number from the label
-    final labels = rawLabels
-        .map((label) => label.substring(label.indexOf(' ')).trim())
-        .toList();
-
-    debugPrint('Labels: $labels');
-    return labels;
+  Category predict(Image image) {
+    if (interpreter == null) {
+      throw StateError('Cannot run inference, Interpreter is null');
+    }
+    _inputImage = TensorImage.fromImage(image);
+    _inputImage = _preProcess();
+    interpreter.run(_inputImage.buffer, _outputBuffer.getBuffer());
+    Map<String, double> labeledProb = TensorLabel.fromList(
+      labels,
+      _probabilityProcessor.process(_outputBuffer),
+    ).getMapWithFloatValue();
+    final prediction = getTopProbability(labeledProb);
+    return Category(prediction.key, prediction.value);
   }
 
   void close() {
-    _model.interpreter.close();
+    interpreter.close();
   }
+}
 
-  ClassifierCategory predict(Image image) {
-    debugPrint(
-      'Image: ${image.width}x${image.height}, '
-          'size: ${image.length} bytes',
-    );
+MapEntry<String, double> getTopProbability(Map<String, double> labeledProb) {
+  var pq = PriorityQueue<MapEntry<String, double>>(compare);
+  pq.addAll(labeledProb.entries);
+  return pq.first;
+}
 
-    // Load the image and convert it to TensorImage for TensorFlow Input
-    final inputImage = _preProcessInput(image);
-
-    debugPrint(
-      'Pre-processed image: ${inputImage.width}x${image.height}, '
-          'size: ${inputImage.buffer.lengthInBytes} bytes',
-    );
-
-    // Define the output buffer
-    final outputBuffer = TensorBuffer.createFixedSize(
-      _model.outputShape,
-      _model.outputType,
-    );
-
-    // Run inference
-    _model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
-
-    debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
-
-    // Post Process the outputBuffer
-    final resultCategories = _postProcessOutput(outputBuffer);
-    final topResult = resultCategories.first;
-
-    debugPrint('Top category: $topResult');
-
-    return topResult;
-  }
-
-  List<ClassifierCategory> _postProcessOutput(TensorBuffer outputBuffer) {
-    final probabilityProcessor = TensorProcessorBuilder().build();
-
-    probabilityProcessor.process(outputBuffer);
-
-    final labelledResult = TensorLabel.fromList(_labels, outputBuffer);
-
-    final categoryList = <ClassifierCategory>[];
-    labelledResult.getMapWithFloatValue().forEach((key, value) {
-      final category = ClassifierCategory(key, value);
-      categoryList.add(category);
-      debugPrint('label: ${category.label}, score: ${category.score}');
-    });
-    categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
-
-    return categoryList;
-  }
-
-  TensorImage _preProcessInput(Image image) {
-    // #1
-    final inputTensor = TensorImage(_model.inputType);
-    inputTensor.loadImage(image);
-
-    // #2
-    final minLength = min(inputTensor.height, inputTensor.width);
-    final cropOp = ResizeWithCropOrPadOp(minLength, minLength);
-
-    // #3
-    final shapeLength = _model.inputShape[1];
-    final resizeOp = ResizeOp(shapeLength, shapeLength, ResizeMethod.BILINEAR);
-
-    // #4
-    final normalizeOp = NormalizeOp(127.5, 127.5);
-
-    // #5
-    final imageProcessor = ImageProcessorBuilder()
-        .add(cropOp)
-        .add(resizeOp)
-        .add(normalizeOp)
-        .build();
-
-    imageProcessor.process(inputTensor);
-
-    // #6
-    return inputTensor;
+int compare(MapEntry<String, double> e1, MapEntry<String, double> e2) {
+  if (e1.value > e2.value) {
+    return -1;
+  } else if (e1.value == e2.value) {
+    return 0;
+  } else {
+    return 1;
   }
 }
