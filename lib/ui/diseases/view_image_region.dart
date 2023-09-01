@@ -69,7 +69,7 @@ class _ViewImageRegionState extends State<ViewImageRegion> {
   @override
   void initState() {
     super.initState();
-    //_classifier = DiseaseDetectionModel();
+    _classifier = DiseaseDetectionModel();
   }
 
   void _predict(File image) async {
