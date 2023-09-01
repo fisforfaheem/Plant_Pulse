@@ -4,8 +4,6 @@ import 'package:plantpulse/ui/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:plantpulse/ui/devices/screen/add_device_Screen.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/tab_icon_data.dart';
 import 'package:plantpulse/ui/diseases/disease_detection_page.dart';
-import 'package:plantpulse/ui/plant_recognizer/plant_recognizer.dart';
-import 'package:plantpulse/ui/devices/screen/devices_screen.dart';
 import 'package:plantpulse/ui/farm/farm_management_page.dart';
 import 'package:plantpulse/ui/profile/user_profile_page.dart';
 import 'package:plantpulse/utils/message_handler.dart';
@@ -30,8 +28,6 @@ class _HomePageState extends State<HomePage> {
       pageTitle: 'Farm Management', //Home
       key: ValueKey(1),
     ),
-
-  //Todo: Change to add devices; make call to BLESCR() instead of DevicesScreen
     // Replace DevicesScreen with BLESCR
     BLESCR(
       key: ValueKey(2),
