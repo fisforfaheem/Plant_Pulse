@@ -1,6 +1,7 @@
 import 'package:plantpulse/app_theme.dart';
 import 'package:plantpulse/data/user/repositories/user_repository.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:plantpulse/ui/devices/screen/add_device_Screen.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/tab_icon_data.dart';
 import 'package:plantpulse/ui/plant_recognizer/plant_recognizer.dart';
 import 'package:plantpulse/ui/devices/screen/devices_screen.dart';
@@ -30,10 +31,14 @@ class _HomePageState extends State<HomePage> {
     ),
 
   //Todo: Change to add devices; make call to BLESCR() instead of DevicesScreen
-    DevicesScreen(
-      pageTitle: 'Devices',
+    // Replace DevicesScreen with BLESCR
+    BLESCR(
       key: ValueKey(2),
     ),
+    /*DevicesScreen(
+      pageTitle: 'Devices',
+      key: ValueKey(2),
+    ),*/
 
     PlantRecognizer(pageTitle: 'Plant Identification', //
       key: ValueKey(3),),
