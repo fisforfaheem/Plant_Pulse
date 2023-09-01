@@ -1,4 +1,4 @@
-import 'dart:io';
+/*import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
@@ -208,4 +208,4 @@ class _PlantRecognizerState extends State<PlantRecognizer> {
       ],
     );
   }
-}
+}*/
