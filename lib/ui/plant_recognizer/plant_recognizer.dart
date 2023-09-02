@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:plantpulse/app_theme.dart';
-import 'classifier/classifier.dart';
+import 'package:plantpulse/ui/plant_recognizer/classifier/classifier.dart';
 import 'styles.dart';
 import 'plant_photo_view.dart';
 
@@ -208,4 +208,4 @@ class _PlantRecognizerState extends State<PlantRecognizer> {
       ],
     );
   }
-}*/
+} */

@@ -4,6 +4,7 @@ import 'package:plantpulse/ui/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:plantpulse/ui/devices/screen/add_device_Screen.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/tab_icon_data.dart';
 import 'package:plantpulse/ui/diseases/disease_detection_page.dart';
+import 'package:plantpulse/ui/plant_recognizer/plant_recognizer.dart';
 import 'package:plantpulse/ui/farm/farm_management_page.dart';
 import 'package:plantpulse/ui/profile/user_profile_page.dart';
 import 'package:plantpulse/utils/message_handler.dart';
@@ -38,8 +39,8 @@ class _HomePageState extends State<HomePage> {
     ),
 /*
     PlantRecognizer(pageTitle: 'Plant Identification', //
-      key: ValueKey(3),),*/
-
+      key: ValueKey(3),),
+*/
     UserProfilePage(
       pageTitle: 'My Profile',
       key: ValueKey(4),
