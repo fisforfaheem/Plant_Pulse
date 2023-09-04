@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import 'dart:math';
+=======
+/*import 'dart:math';
+>>>>>>> 4184cfbe7bd99eaca5bf7e1e48d8cda2a41405f7
 
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';

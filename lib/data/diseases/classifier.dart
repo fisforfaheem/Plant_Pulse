@@ -19,7 +19,7 @@ abstract class Classifier {
   late TensorBuffer _outputBuffer;
   // TensorType _outputType = TensorType.uint8;
   final String _labelsFileName = 'assets/dict.txt';
-  final int _labelsLength = 6;
+  //final int _labelsLength = 6;
   var _probabilityProcessor;
   late List<String> labels;
 
