@@ -35,6 +35,14 @@ dependencies:
   clean_calendar: ^1.1.0
   image_picker: ^0.8.7+5
   native_image_cropper: ^0.3.1
+<<<<<<< HEAD
+  # tflite_flutter_helper_plus: ^0.0.2
+  tflite_flutter: ^0.9.0
+  tflite_flutter_helper:
+      git:
+        url: https://github.com/filofan1/tflite_flutter_helper.git
+        ref: 783f15e5a87126159147d8ea30b98eea9207ac70
+=======
   #tflite_flutter: ^0.9.0
   tflite_flutter_helper_plus: ^0.0.2
   tflite_flutter: ^0.10.1
@@ -42,6 +50,7 @@ dependencies:
   #    git:
   #      url: https://github.com/filofan1/tflite_flutter_helper.git
   #      ref: 783f15e5a87126159147d8ea30b98eea9207ac70
+>>>>>>> 4184cfbe7bd99eaca5bf7e1e48d8cda2a41405f7
   logger: ^1.3.0
   image: ^3.2.2
   image_cropper: ^4.0.1
@@ -63,7 +72,10 @@ dependencies:
   #to add Google Fonts
   google_fonts: ^4.0.4
   wifi_iot: ^0.3.18
+  persistent_bottom_nav_bar_v2: ^4.2.8
 
+dependency_overrides:
+  ffi: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,18 +1,18 @@
-import 'package:plantpulse/data/farm/models/Forecast.dart';
-import 'package:plantpulse/data/farm/models/Weather.dart';
-import 'package:plantpulse/data/farm/view_model/cityEntryViewModel.dart';
-import 'package:plantpulse/data/farm/view_model/weather_app_forecast_viewmodel.dart';
-import 'package:plantpulse/ui/farm/weather/weatherSummaryView.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:plantpulse/data/farm/models/Forecast.dart';
+import 'package:plantpulse/data/farm/models/Weather.dart';
+import 'package:plantpulse/data/farm/view_model/weather_app_forecast_viewmodel.dart';
+import 'package:plantpulse/ui/farm/weather/weatherSummaryView.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app_theme.dart';
 import 'cityEntryView.dart';
 import 'gradient.dart';
 
 class WeatherHome extends StatefulWidget {
+  const WeatherHome({Key? key}) : super(key: key);
   @override
   _WeatherHomeState createState() => _WeatherHomeState();
 }
@@ -21,10 +21,11 @@ class _WeatherHomeState extends State<WeatherHome> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       refreshWeather(Provider.of<ForecastViewModel>(context, listen: false), context);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ForecastViewModel>(
@@ -33,7 +34,6 @@ class _WeatherHomeState extends State<WeatherHome> {
             model.condition, model.isDaytime, buildHomeView(context, model)),
       ),
     );
-
   }
 
   @override
@@ -42,32 +42,35 @@ class _WeatherHomeState extends State<WeatherHome> {
         builder: (context, weatherViewModel, child) => Container(
             height: 250,
             child: RefreshIndicator(
-              color: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              onRefresh: () =>  refreshWeather(weatherViewModel, context),
+              onRefresh: () async {
+                await refreshWeather(weatherViewModel, context);
+              },
+                color: Colors.black,
+        backgroundColor: Colors.white,
               child: ListView(
                 children: <Widget>[
-                  if (!weatherViewModel.isWeatherLoaded) CityEntryView(), // if weatherViewModel.city is empty hide
+                  if (!weatherViewModel.isWeatherLoaded)
+                    CityEntryView(), // if weatherViewModel.city is empty hide
                   weatherViewModel.isRequestPending
                       ? buildBusyIndicator()
                       : weatherViewModel.isRequestError
-                      ? Center(
-                      child: Text('Ooops...something went wrong',
-                          style: TextStyle(fontSize: 21, color: Colors.white)))
-                      : Column(children: [
-                    WeatherSummary(
-                      condition: weatherViewModel.condition,
-                      temp: weatherViewModel.temp,
-                      feelsLike: weatherViewModel.feelsLike,
-                      isdayTime: weatherViewModel.isDaytime,
-                      iconData: weatherViewModel.iconData,
-                      city: weatherViewModel.city,
-                      description: weatherViewModel.description,
-                      daily: weatherViewModel.daily,
-                      model: model,
-                      // weatherModel: model,
-                    ),
-                  ]),
+                          ? Center(
+                              child: Text('Ooops...something went wrong',
+                                  style: TextStyle(fontSize: 21, color: Colors.white)))
+                          : Column(children: [
+                              WeatherSummary(
+                                condition: weatherViewModel.condition,
+                                temp: weatherViewModel.temp,
+                                feelsLike: weatherViewModel.feelsLike,
+                                isdayTime: weatherViewModel.isDaytime,
+                                iconData: weatherViewModel.iconData,
+                                city: weatherViewModel.city,
+                                description: weatherViewModel.description,
+                                daily: weatherViewModel.daily,
+                                model: model,
+                                // weatherModel: model,
+                              ),
+                            ]),
                 ],
               ),
             )));
@@ -117,8 +120,7 @@ class _WeatherHomeState extends State<WeatherHome> {
   }
 
   Future<Forecast> _getLocation(ForecastViewModel weatherVM, BuildContext context) async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     return weatherVM.getLatestWeather(position);
   }
 
@@ -130,7 +132,7 @@ class _WeatherHomeState extends State<WeatherHome> {
           data: AppTheme.appTheme.copyWith(
             // Customize the dialog title text style
             textTheme: TextTheme(
-              headline6: TextStyle(
+              titleLarge: TextStyle(
                 fontSize: 18, // Adjust the font size as needed
                 fontWeight: FontWeight.bold,
                 color: Colors.black, // Customize the text color
@@ -152,7 +154,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                   'Location Permission',
                   style: TextStyle(
                     fontSize: 20, // Adjust the font size as needed
-                    fontWeight: FontWeight.w700,// Adjust the font size as needed
+                    fontWeight: FontWeight.w700, // Adjust the font size as needed
                     color: Colors.black87, // Customize the text color
                   ),
                 ),
@@ -197,7 +199,7 @@ class _WeatherHomeState extends State<WeatherHome> {
           data: AppTheme.appTheme.copyWith(
             // Customize the dialog title text style
             textTheme: TextTheme(
-              headline6: TextStyle(
+              titleLarge: TextStyle(
                 fontSize: 18, // Adjust the font size as needed
                 fontWeight: FontWeight.bold,
                 color: Colors.black, // Customize the text color
@@ -219,7 +221,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                   'Location Permission Permanently Denied',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,// Adjust the font size as needed
+                    fontWeight: FontWeight.w700, // Adjust the font size as needed
                     color: Colors.black87, // Customize the text color
                   ),
                 ),
@@ -254,7 +256,6 @@ class _WeatherHomeState extends State<WeatherHome> {
       },
     );
   }
-
 
   GradientContainer _buildGradientContainer(
       WeatherCondition condition, bool isDayTime, Widget child) {
