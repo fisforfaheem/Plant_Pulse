@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:plantpulse/data/authentication/models/user.dart';
 import 'package:plantpulse/data/authentication/repositories/authentication_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 part 'authentication_state.dart';
 
@@ -42,7 +42,7 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
     _authenticationRepository.logInWithGoogle();
   }
 
-  void logout() {
-    _authenticationRepository.logOut();
+  Future<void> logout() async {
+    await _authenticationRepository.logOut();
   }
 }

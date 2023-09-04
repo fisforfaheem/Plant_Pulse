@@ -1,28 +1,28 @@
 import 'dart:convert';
 
-import 'package:plantpulse/ui/devices/model/save_user_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:plantpulse/ui/devices/model/save_user_response.dart';
 
 import '../model/get_device_data_response.dart';
 import '../model/get_user_devices_response.dart';
 import '../model/images_response.dart';
 import '../model/save_device_response.dart';
-String hostName='';
+
+String hostName = '';
+
 class DevicesRepository {
   String base = "https://athome.rodlandfarms.com";
   String baseUrl = "https://athome.rodlandfarms.com/api";
 
-  Future<SaveUserResponse> saveUser(String loginToken,  displayName,  email) async {
-    final response =
-    await http.post(Uri.parse("$base/user/save"), body: {"login_token": loginToken, "name": displayName, "email": email});
-
+  Future<SaveUserResponse> saveUser(String loginToken, displayName, email) async {
+    final response = await http.post(Uri.parse("$base/user/save"),
+        body: {"login_token": loginToken, "name": displayName, "email": email});
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      debugPrint('LOG : ${response.body}');
       final data = SaveUserResponse.fromJson(jsonDecode(response.body));
       FlutterSecureStorage().write(key: 'api_token', value: data.apiToken);
       return data;
@@ -37,24 +37,27 @@ class DevicesRepository {
     }
   }
 
-  Future<List<Records>> getUserDevices() async {
+  Future<List<Future<GetDeviceDataResponse>>> getUserDevices() async {
     String? apiToken = await const FlutterSecureStorage().read(key: 'api_token');
 
     final response = await http.get(Uri.parse("$baseUrl/user/devices?api_token=$apiToken"));
 
     if (response.statusCode == 200) {
-      final foo = jsonDecode(response.body);
       // If the server did return a 200 OK response,
       // then parse the JSON.
       final devices = GetUserDeviceResponse.fromJson(jsonDecode(response.body)).devices!;
-      final List<Records> devicesData = [];
-      for (var device in devices) {
+      final List<Future<GetDeviceDataResponse>> devicesData = [];
+      await Future.forEach(devices, (device) async {
         if (device.hostname != null && device.hostname!.isNotEmpty) {
-          hostName=device.hostname!;
-          final deviceData = await getLatestDeviceData(device.hostname!);
-          devicesData.add(deviceData.data!.first);
+          hostName = device.hostname!;
+          debugPrint('LOG : Data $hostName');
+          final d = getLatestDeviceData(hostName);
+          debugPrint('LOG : Data Arrived');
+          devicesData.add(d);
+          debugPrint('LOG : Data Added');
         }
-      }
+      });
+      debugPrint('LOG : Data Returned');
       return devicesData;
     } else {
       // If the server did not return a 200 OK response,

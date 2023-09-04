@@ -1,12 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:plantpulse/app_theme.dart';
 import 'package:plantpulse/bloc/authentication/authentication.dart';
 import 'package:plantpulse/ui/profile/avatar.dart';
 import 'package:plantpulse/ui/profile/user_info_field.dart';
 import 'package:plantpulse/ui/widgets/tab_page.dart';
 import 'package:plantpulse/utils/message_handler.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserProfilePage extends TabPage {
   const UserProfilePage({required Key key, required String pageTitle})
@@ -19,19 +19,45 @@ class UserProfilePage extends TabPage {
 class _UserProfilePagePageState extends TabPageState<UserProfilePage> {
   @override
   void initState() {
-    tabListView.add(Avatar());
-    tabListView.add(UserInfoField(
-      name: 'Name',
-      icon: Icons.account_circle,
-      field: 'displayName',
-    ));
-    tabListView.add(UserInfoField(
-      name: 'Email',
-      icon: Icons.email,
-      field: 'email',
-    ));
-    tabListView.add(_LogOutButton());
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      tabListView.add(
+        RefreshIndicator(
+          color: Colors.black,
+          backgroundColor: Colors.white,
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 1));
+            setState(() {});
+          },
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 100.h,
+            child: Stack(
+              children: [
+                ListView(),
+                Column(
+                  children: [
+                    Avatar(),
+                    UserInfoField(
+                      name: 'Name',
+                      icon: Icons.account_circle,
+                      field: 'displayName',
+                    ),
+                    UserInfoField(
+                      name: 'Email',
+                      icon: Icons.email,
+                      field: 'email',
+                    ),
+                    _LogOutButton(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      setState(() {});
+    });
   }
 }
 
@@ -45,13 +71,13 @@ class _LogOutButton extends StatelessWidget {
           height: 45.h,
           width: 300.w,
           child: ElevatedButton(
-            child:  Text(
+            child: Text(
               'LOG OUT',
               style: AppTheme.appTheme.textTheme.labelLarge!,
             ),
             onPressed: () async {
-              context.read<AuthenticationBloc>().logout();
-              await context.read<MessageHandler>().deleteToken();
+              await context.read<AuthenticationBloc>().logout();
+              context.read<MessageHandler>().deleteToken();
             },
           ),
         ),

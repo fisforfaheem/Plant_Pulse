@@ -1,4 +1,3 @@
-/*
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -68,9 +67,7 @@ class Classifier {
     final rawLabels = await FileUtil.loadLabels(labelsFileName);
 
     // Remove the index number from the label
-    final labels = rawLabels
-        .map((label) => label.substring(label.indexOf(' ')).trim())
-        .toList();
+    final labels = rawLabels.map((label) => label.substring(label.indexOf(' ')).trim()).toList();
 
     debugPrint('Labels: $labels');
     return labels;
@@ -149,15 +146,12 @@ class Classifier {
     final normalizeOp = NormalizeOp(127.5, 127.5);
 
     // #5
-    final imageProcessor = ImageProcessorBuilder()
-        .add(cropOp)
-        .add(resizeOp)
-        .add(normalizeOp)
-        .build();
+    final imageProcessor =
+        ImageProcessorBuilder().add(cropOp).add(resizeOp).add(normalizeOp).build();
 
     imageProcessor.process(inputTensor);
 
     // #6
     return inputTensor;
   }
-}*/
+}

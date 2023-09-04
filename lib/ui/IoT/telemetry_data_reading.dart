@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plantpulse/app_theme.dart';
 import 'package:plantpulse/data/IoT/models/telemetry_data.dart';
 import 'package:plantpulse/ui/IoT/reload_time.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class TelemetryDataReading extends StatelessWidget {
   const TelemetryDataReading({required this.data, required this.reloadTime});
@@ -27,10 +26,7 @@ class TelemetryDataReading extends StatelessWidget {
   }
 
   Text _buildReading(String reading) {
-    return Text(
-      reading,
-      textAlign: TextAlign.right,
-      style: AppTheme.appTheme.textTheme.displayMedium!
-    );
+    return Text(reading,
+        textAlign: TextAlign.right, style: AppTheme.appTheme.textTheme.displayMedium!);
   }
 }

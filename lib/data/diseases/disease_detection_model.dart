@@ -1,5 +1,6 @@
 import 'package:plantpulse/data/diseases/classifier.dart';
-import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+// import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
 
 class DiseaseDetectionModel extends Classifier {
   DiseaseDetectionModel({int numThreads = 1}) : super(numThreads: numThreads);

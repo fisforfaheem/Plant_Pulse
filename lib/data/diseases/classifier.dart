@@ -4,8 +4,8 @@ import 'package:collection/collection.dart';
 import 'package:image/image.dart';
 import 'package:logger/logger.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-//import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
-import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+// import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
 
 //tflite type
 
@@ -17,7 +17,7 @@ abstract class Classifier {
   late List<int> _outputShape;
   late TensorImage _inputImage;
   late TensorBuffer _outputBuffer;
-  TensorType _outputType = TensorType.uint8;
+  // TensorType _outputType = TensorType.uint8;
   final String _labelsFileName = 'assets/dict.txt';
   final int _labelsLength = 6;
   var _probabilityProcessor;
@@ -44,10 +44,9 @@ abstract class Classifier {
       );
       _inputShape = interpreter.getInputTensor(0).shape;
       _outputShape = interpreter.getOutputTensor(0).shape;
-      _outputType = interpreter.getOutputTensor(0).type;
+      // _outputType = interpreter.getOutputTensor(0).type;
       _outputBuffer = TensorBufferUint8(_outputShape); //TensorBufferFloat32
-      _probabilityProcessor =
-          TensorProcessorBuilder().add(postProcessNormalizeOp).build();
+      _probabilityProcessor = TensorProcessorBuilder().add(postProcessNormalizeOp).build();
     } catch (e) {
       print('Unable to create interpreter, Caught Exception: ${e.toString()}');
     }
@@ -70,7 +69,7 @@ abstract class Classifier {
           ResizeOp(
             _inputShape[1],
             _inputShape[2],
-            ResizeMethod.nearestneighbour,
+            ResizeMethod.NEAREST_NEIGHBOUR,
           ),
         )
         .add(preProcessNormalizeOp)

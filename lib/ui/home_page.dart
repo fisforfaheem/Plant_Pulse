@@ -1,15 +1,16 @@
-import 'package:plantpulse/app_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:plantpulse/data/IoT/repositories/telemetry_data_repository.dart';
 import 'package:plantpulse/data/user/repositories/user_repository.dart';
-import 'package:plantpulse/ui/bottom_navigation_bar/bottom_navigation_bar.dart';
-import 'package:plantpulse/ui/devices/screen/add_device_Screen.dart';
 import 'package:plantpulse/ui/bottom_navigation_bar/tab_icon_data.dart';
+import 'package:plantpulse/ui/devices/screen/devices_screen.dart';
 import 'package:plantpulse/ui/diseases/disease_detection_page.dart';
 import 'package:plantpulse/ui/farm/farm_management_page.dart';
 import 'package:plantpulse/ui/profile/user_profile_page.dart';
 import 'package:plantpulse/utils/message_handler.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 class HomePage extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => HomePage());
@@ -23,32 +24,36 @@ class _HomePageState extends State<HomePage> {
   final UserRepository _userRepository = UserRepository();
   late MessageHandler _messageHandler;
   List<TabIconData> _tabIconsList = TabIconData.tabIconsList;
+  PersistentTabController _controller = PersistentTabController(initialIndex: 0);
   List<Widget> _tabList = [
     FarmManagementPage(
-      pageTitle: 'Farm Management', //Home
+      pageTitle: 'Farm Management',
       key: ValueKey(1),
     ),
-    // Replace DevicesScreen with BLESCR
-    BLESCR(
+
+    DevicesScreen(
+      pageTitle: 'Devices',
       key: ValueKey(2),
     ),
+
+    // IoTMonitoringPage(
+    //   pageTitle: 'IoT Monitoring',
+    //   key: ValueKey(2),
+    // ),
     DiseaseDetectionPage(
       pageTitle: 'Disease Detection',
       key: ValueKey(3),
     ),
-/*
-    PlantRecognizer(pageTitle: 'Plant Identification', //
-      key: ValueKey(3),),*/
 
     UserProfilePage(
       pageTitle: 'My Profile',
       key: ValueKey(4),
     ),
   ];
-  PageController _pageController = PageController();
   void printToken() async {
     String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
   }
+
   @override
   void initState() {
     printToken();
@@ -58,12 +63,16 @@ class _HomePageState extends State<HomePage> {
     });
     _tabIconsList[0].isSelected = true;
 
+    _controller.addListener(() {
+      setState(() {});
+    });
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -77,34 +86,51 @@ class _HomePageState extends State<HomePage> {
         RepositoryProvider<MessageHandler>.value(
           value: _messageHandler,
         ),
-      ],
-      child: Container(
-        color: AppTheme.appTheme.scaffoldBackgroundColor,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: <Widget>[
-              PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _pageController,
-                children: _tabList,
-              ),
-              Column(
-                children: <Widget>[
-                  const Expanded(
-                    child: SizedBox(),
-                  ),
-                  BottomNavBar(
-                    tabIconsList: _tabIconsList,
-                    onTap: (int i) {
-                      _pageController.jumpToPage(i);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
+        RepositoryProvider<TelemetryDataRepository>(
+          create: (_) => TelemetryDataRepository(),
         ),
+      ],
+      child: PersistentTabView(
+        context,
+        screens: _tabList,
+        navBarHeight: 70,
+        hideNavigationBar: false,
+        items: _tabIconsList.map((TabIconData tab) {
+          return PersistentBottomNavBarItem(
+            activeColorPrimary:
+                _controller.index == tab.index ? Theme.of(context).primaryColor : Colors.grey,
+            icon: _controller.index == tab.index
+                ? Image.asset(
+                    tab.selectedImagePath,
+                    width: 24,
+                    height: 24,
+                  )
+                : Image.asset(
+                    tab.imagePath,
+                    width: 24,
+                    height: 24,
+                  ),
+            title: tab.label,
+            textStyle: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          );
+        }).toList(),
+        controller: _controller,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          colorBehindNavBar: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: Offset(0, 0), // changes position of shadow
+            ),
+          ],
+        ),
+        navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property.
       ),
     );
   }

@@ -1,8 +1,8 @@
-import 'package:plantpulse/data/farm/models/Weather.dart';
-import 'package:plantpulse/data/farm/view_model/weather_app_forecast_viewmodel.dart';
-import 'package:plantpulse/data/farm/utils/weather_temp.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:plantpulse/data/farm/models/Weather.dart';
+import 'package:plantpulse/data/farm/utils/weather_temp.dart';
+import 'package:plantpulse/data/farm/view_model/weather_app_forecast_viewmodel.dart';
 
 class WeatherSummary extends StatelessWidget {
   final ForecastViewModel model;
@@ -81,53 +81,56 @@ class WeatherSummary extends StatelessWidget {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (int i = 0; i < daily.length && i < 5; i++)
-                Container(
-                  margin: EdgeInsets.all(6),
-                  padding: EdgeInsets.all(8),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.transparent,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                for (int i = 0; i < daily.length && i < 5; i++)
+                  Container(
+                    margin: EdgeInsets.all(6),
+                    padding: EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.transparent,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          //textAlign: TextAlign.center,
+                          '${_formatTemperature(TemperatureConvert.kelvinToFarenheit(daily[i].temp))}°F',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 6.0),
+                          //alignment: Alignment.center,
+                          //alignment: AlignmentDirectional.center,
+                          child: new Icon(
+                            color: Colors.white,
+                            //iconData,
+                            daily[i].getIconData(daily[i].iconCode),
+                            size: 15,
+                          ),
+                        ),
+                        Text(
+                          '${_getDayOfWeek(daily[i].date.toString())}'.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        //textAlign: TextAlign.center,
-                        '${_formatTemperature(TemperatureConvert.kelvinToFarenheit(daily[i].temp))}°F',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(bottom: 6.0),
-                        //alignment: Alignment.center,
-                        //alignment: AlignmentDirectional.center,
-                        child: new Icon(
-                          color: Colors.white,
-                          //iconData,
-                          daily[i].getIconData(daily[i].iconCode),
-                          size: 15,
-                        ),
-                      ),
-                      Text(
-                        '${_getDayOfWeek(daily[i].date.toString())}'.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -145,8 +148,7 @@ class WeatherSummary extends StatelessWidget {
     return temp;
   }
 
-  Widget _mapWeatherConditionToImage(
-      WeatherCondition condition, bool isDayTime) {
+  Widget _mapWeatherConditionToImage(WeatherCondition condition, bool isDayTime) {
     Image image;
     switch (condition) {
       case WeatherCondition.thunderstorm:

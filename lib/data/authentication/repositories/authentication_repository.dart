@@ -1,11 +1,11 @@
 import 'dart:async';
 
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:plantpulse/data/authentication/models/user.dart';
-import 'package:plantpulse/ui/devices/repository/devices_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plantpulse/data/authentication/models/user.dart';
+import 'package:plantpulse/ui/devices/repository/devices_repository.dart';
 
 // Thrown if during the sign up process if a failure occurs.
 class SignUpFailure implements Exception {}
@@ -86,7 +86,6 @@ class AuthenticationRepository {
           .set({
         'month': -99,
       }); */
-
     } on Exception catch (_) {
       debugPrint('LOG : EXCEPTION $_');
       throw SignUpFailure();
@@ -130,11 +129,12 @@ class AuthenticationRepository {
 
   Future<void> logOut() async {
     try {
-      await Future.wait([
-        _firebaseAuth.signOut(),
-        _googleSignIn.signOut(),
-      ]);
-      print('done');
+      await _googleSignIn.signOut();
+    } on Exception {
+      throw LogOutFailure();
+    }
+    try {
+      await _firebaseAuth.signOut();
     } on Exception {
       print('bye');
 
