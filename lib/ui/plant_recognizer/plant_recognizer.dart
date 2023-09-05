@@ -4,14 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:plantpulse/app_theme.dart';
-<<<<<<< HEAD
-
-import 'classifier/classifier.dart';
-=======
 import 'package:plantpulse/ui/plant_recognizer/classifier/classifier.dart';
-import 'styles.dart';
-import 'plant_photo_view.dart';
->>>>>>> 4184cfbe7bd99eaca5bf7e1e48d8cda2a41405f7
 
 const _labelsFileName = 'assets/dict.txt';
 const _modelFileName = 'model.tflite';
@@ -327,8 +320,4 @@ class _PlantRecognizerState extends State<PlantRecognizer> {
       ],
     );
   }
-<<<<<<< HEAD
 }
-=======
-} */
->>>>>>> 4184cfbe7bd99eaca5bf7e1e48d8cda2a41405f7
