@@ -1,0 +1,588 @@
+repo_name: fisforfaheem/Plant_Pulse
+report_id: 0d9a2d59c5f57d612e5c6af28949641c
+repo_type: Public
+timestamp: '2023-11-10T07:20:00+00:00'
+requested_by: taimoor522
+provider: github
+branch: master
+detected_tools_count: 52
+tools:
+- name: Dart
+  description: A new web programming language with libraries, a virtual machine, and
+    tools
+  website_url: https://www.dartlang.org/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1646/Twitter-02.png
+  detection_source: Repo Metadata
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: Kotlin
+  description: Statically typed Programming Language targeting JVM and JavaScript
+  website_url: https://kotlinlang.org/
+  open_source: true
+  hosted_saas: true
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/3750/pCfEzr6L.png
+  detection_source: Repo Metadata
+- name: Objective-C
+  description: The primary programming language you use when writing software for
+    OS X and iOS
+  website_url: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1008/xcode.png
+  detection_source: Repo Metadata
+- name: Python
+  description: A clear and powerful object-oriented programming language, comparable
+    to Perl, Ruby, Scheme, or Java.
+  website_url: https://www.python.org
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source: dependencies/formz-0.4.1/pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: Ruby
+  description: A dynamic, interpreted, open source programming language with a focus
+    on simplicity and productivity
+  website_url: https://www.ruby-lang.org
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/989/ruby.png
+  detection_source: Repo Metadata
+- name: Swift
+  description: 'An innovative new programming language for Cocoa and Cocoa Touch. '
+  website_url: https://developer.apple.com/swift/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1009/tuHsaI2U.png
+  detection_source: Repo Metadata
+- name: Android SDK
+  description: An SDK that provides you the API libraries and developer tools necessary
+    to build, test, and debug apps for Android.
+  website_url: http://developer.android.com
+  version: '33.0'
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1010/m8jf0po4imu8t5eemjdd.png
+  detection_source_url: android/app/build.gradle
+  detection_source: android/app/build.gradle
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: Flutter
+  description: Cross-platform mobile framework from Google
+  website_url: https://flutter.io/
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Cross-Platform Mobile Development
+  image_url: https://img.stackshare.io/service/7180/flutter-mark-square-100.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source: Repo Metadata
+- name: Gradle
+  description: A powerful build system for the JVM
+  website_url: https://www.gradle.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Java Build Tools
+  image_url: https://img.stackshare.io/service/975/gradlephant-social-black-bg.png
+  detection_source: android/app/build.gradle
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: PyPI
+  description: A repository of software for the Python programming language
+  website_url: https://pypi.org/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Hosted Package Repository
+  image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source: dependencies/formz-0.4.1/pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: RubyGems
+  description: Easily download, install, and use ruby software packages on your system
+  website_url: https://rubygems.org/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/service/12795/5jL6-BA5_400x400.jpeg
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: Android OS
+  description: An open source mobile operating system by Google
+  website_url: https://www.android.com
+  version: '13.0'
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Operating Systems
+  image_url: https://img.stackshare.io/service/9586/ZvmtaSXW_400x400.jpg
+  detection_source_url: android/app/build.gradle
+  detection_source: android/app/build.gradle
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: CocoaPods
+  description: A dependency manager for Swift and Objective-C Cocoa projects
+  website_url: https://cocoapods.org/
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: CocoaPods Packages
+  image_url: https://img.stackshare.io/service/2426/e1cbdef9d4b11484049a033886578e54_400x400.png
+  detection_source: ios/Podfile.lock
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: bloc
+  description: A predictable state management library that helps implement the BLoC
+  package_url: https://pub.dartlang.org/bloc
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: cached_network_image
+  description: Flutter library to load and cache network images
+  package_url: https://pub.dartlang.org/cached_network_image
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: cloud_firestore
+  description: Flutter plugin for Cloud Firestore
+  package_url: https://pub.dartlang.org/cloud_firestore
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: collection
+  description: Collections and utilities functions and classes related to collections
+  package_url: https://pub.dartlang.org/collection
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: coverage
+  description: Coverage data manipulation and formatting
+  package_url: https://pub.dartlang.org/coverage
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: dependencies/formz-0.4.1/pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: equatable
+  description: A Dart package that helps to implement value based equality without
+    needing to explicitly override == and hashCode
+  package_url: https://pub.dartlang.org/equatable
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: firebase_auth
+  description: Flutter plugin for Firebase Auth
+  package_url: https://pub.dartlang.org/firebase_auth
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: firebase_core
+  description: Flutter plugin for Firebase Core
+  package_url: https://pub.dartlang.org/firebase_core
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: firebase_database
+  description: Flutter plugin for Firebase Database
+  package_url: https://pub.dartlang.org/firebase_database
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: firebase_messaging
+  description: Flutter plugin for Firebase Cloud Messaging
+  package_url: https://pub.dartlang.org/firebase_messaging
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: fl_chart
+  description: A highly customizable Flutter chart library that supports Line Chart
+  package_url: https://pub.dartlang.org/fl_chart
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: flutter
+  description: Visit flutter.io to get started
+  package_url: https://pub.dartlang.org/flutter
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_bloc
+  description: Flutter Widgets that make it easy to implement the BLoC
+  package_url: https://pub.dartlang.org/flutter_bloc
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_bluetooth_serial
+  description: A basic Flutter Bluetooth Serial library
+  package_url: https://pub.dartlang.org/flutter_bluetooth_serial
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_form_builder
+  description: This package helps in creation of forms in Flutter by removing the
+    boilerplate code
+  package_url: https://pub.dartlang.org/flutter_form_builder
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_screenutil
+  description: A flutter plugin for adapting screen and font size.Guaranteed to look
+    good on different models
+  package_url: https://pub.dartlang.org/flutter_screenutil
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_secure_storage
+  description: Flutter Secure Storage provides API to store data in secure storage
+  package_url: https://pub.dartlang.org/flutter_secure_storage
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: flutter_svg
+  description: An SVG rendering and widget library for Flutter
+  package_url: https://pub.dartlang.org/flutter_svg
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: font_awesome_flutter
+  description: The Font Awesome Icon pack available as Flutter Icons
+  package_url: https://pub.dartlang.org/font_awesome_flutter
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: geolocator
+  description: Geolocation plugin for Flutter
+  package_url: https://pub.dartlang.org/geolocator
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: google_fonts
+  description: A Flutter package to use fonts from fonts.google.com
+  package_url: https://pub.dartlang.org/google_fonts
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: google_sign_in
+  description: Flutter plugin for Google Sign-In
+  package_url: https://pub.dartlang.org/google_sign_in
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: http
+  description: A composable
+  package_url: https://pub.dartlang.org/http
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: image
+  description: Dart Image Library provides server and web apps the ability to load
+  package_url: https://pub.dartlang.org/image
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: image_cropper
+  description: A Flutter plugin for Android
+  package_url: https://pub.dartlang.org/image_cropper
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: image_picker
+  description: Flutter plugin for selecting images from the Android and iOS image
+    library
+  package_url: https://pub.dartlang.org/image_picker
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: intl
+  description: Contains code to deal with internationalized/localized messages
+  package_url: https://pub.dartlang.org/intl
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: location
+  description: Cross-platform plugin for easy access to device's location in real-time
+  package_url: https://pub.dartlang.org/location
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: logger
+  description: Small
+  package_url: https://pub.dartlang.org/logger
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: page_transition
+  description: Flutter Page Transition Package which is the transition second page
+  package_url: https://pub.dartlang.org/page_transition
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: pedantic
+  description: The Dart analyzer settings and best practices used internally at Google
+  package_url: https://pub.dartlang.org/pedantic
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: permission_handler
+  description: Permission plugin for Flutter
+  package_url: https://pub.dartlang.org/permission_handler
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: provider
+  description: A wrapper around InheritedWidget to make them easier to use and more
+    reusable
+  package_url: https://pub.dartlang.org/provider
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: syncfusion_flutter_charts
+  description: A Flutter Charts library which includes data visualization widgets
+    such as cartesian and circular charts
+  package_url: https://pub.dartlang.org/syncfusion_flutter_charts
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: Taimoor Ghafar
+  last_updated_on: 2023-09-05 14:46:43.000000000 Z
+- name: wc_form_validators
+  description: A Flutter plugin to validate forms with utility functions
+  package_url: https://pub.dartlang.org/wc_form_validators
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/pub/image.png
+  detection_source: pubspec.yaml
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
+- name: org.jetbrains.kotlin:kotlin-stdlib-jdk7
+  description: Kotlin Standard Library JDK 7 extension
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source: android/app/build.gradle
+  last_updated_by: c1scok1d
+  last_updated_on: 2023-08-29 17:04:11.000000000 Z
